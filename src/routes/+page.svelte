@@ -3,29 +3,41 @@
 	import { browser } from '$app/environment';
 	import ColorThief from 'colorthief';
 	import 'carbon-components-svelte/css/g90.css';
-	import { Dropdown, FileUploader, Slider } from 'carbon-components-svelte';
-	import { calculateContrastRatio, objectify } from '$lib';
+	import Slider from '$lib/Slider.svelte';
+	import { CopyButton, Dropdown, FileUploader } from 'carbon-components-svelte';
+	import {
+		// calculateContrastRatio,
+		computedColor,
+		contrastRatio,
+		objectify,
+		bgColor,
+		overlayColor,
+		fgColor,
+		opacity,
+		cssizer
+	} from '$lib';
 	import { hexToRGB, rgbToHex } from '$lib/colorUtils';
 	let colorThief,
 		palette = [],
-		opacity = 0.5,
+		// opacity = 0.5,
 		imageUrl = 'tunnel.jpg',
 		bgColorPicker = '#3c6d88',
 		overlayColorPicker = '#b9cfdd',
 		fgColorPicker = '#182a2f',
-		bgColor = bgColorPicker,
-		overlayColor = overlayColorPicker,
-		fgColor = fgColorPicker;
+		// bgColor = bgColorPicker,
+		// overlayColor = overlayColorPicker,
+		// fgColor = fgColorPicker,
+		imageFilename = '';
 	$: useImageColors = imageUrl !== 'tunnel.jpg' && palette && palette.length === 5;
 	$: schema = [
 		{ loc: 'Background', id: 0 },
 		{ loc: 'Overlay', id: 2 },
 		{ loc: 'Foreground', id: 4 }
 	];
-	$: bgColor = useImageColors && palette[schema[0].id] ? palette[schema[0].id] : bgColorPicker;
-	$: overlayColor =
+	$: $bgColor = useImageColors && palette[schema[0].id] ? palette[schema[0].id] : bgColorPicker;
+	$: $overlayColor =
 		useImageColors && palette[schema[1].id] ? palette[schema[1].id] : overlayColorPicker;
-	$: fgColor = useImageColors && palette[schema[2].id] ? palette[schema[2].id] : fgColorPicker;
+	$: $fgColor = useImageColors && palette[schema[2].id] ? palette[schema[2].id] : fgColorPicker;
 
 	// TODO: refactor schema to allow colorpicker input after image upload
 	// TODO: pull apart the spaghetti and make into components
@@ -39,6 +51,7 @@
 		// const file = event.detail[0];
 
 		if (file) {
+			imageFilename = file.name;
 			const reader = new FileReader();
 
 			reader.onload = async function (event) {
@@ -46,15 +59,9 @@
 				const img = new Image();
 				img.src = event.target.result;
 				if (img && img.complete) {
-					// let colorArray = colorThief.getColor(img);
-					// let thiefObj = Object.fromEntries(colorArray.map((c, i) => ['rgb'.split('')[i], c]));
-					// bgColor = rgbToHex(thiefObj);
 					palette = colorThief.getPalette(img, 5).map((color) => rgbToHex(objectify(color)));
 				} else {
 					img.addEventListener('load', function () {
-						// let colorArray = colorThief.getColor(img);
-						// let thiefObj = Object.fromEntries(colorArray.map((c, i) => ['rgb'.split('')[i], c]));
-						// bgColor = rgbToHex(thiefObj);
 						palette = colorThief.getPalette(img, 5).map((color) => rgbToHex(objectify(color)));
 					});
 				}
@@ -65,49 +72,21 @@
 		}
 	}
 
-	let computedColor = '#000000';
-
-	function updateComputedColor() {
-		let bg = hexToRGB(bgColor);
-		let ol = hexToRGB(overlayColor);
-		let blendedColor = {
-			r: Math.round((1 - opacity) * bg.r + opacity * ol.r),
-			g: Math.round((1 - opacity) * bg.g + opacity * ol.g),
-			b: Math.round((1 - opacity) * bg.b + opacity * ol.b)
-		};
-		// Convert the blended color back to hex
-		computedColor = `#${blendedColor.r.toString(16).padStart(2, '0')}${blendedColor.g.toString(16).padStart(2, '0')}${blendedColor.b.toString(16).padStart(2, '0')}`;
-	}
-
 	// Call updateComputedColor whenever opacity changes
 	$: {
-		updateComputedColor(opacity, bgColor, overlayColor, fgColor);
 		if (browser) {
-			document.body.style.backgroundColor = bgColor;
+			document.body.style.backgroundColor = $bgColor;
 		}
 	}
 	let open = false;
-	$: resultRGB = hexToRGB(computedColor);
-	$: contrastRatio = calculateContrastRatio(hexToRGB(computedColor), hexToRGB(fgColor));
+	$: resultRGB = hexToRGB($computedColor);
 	$: fixUsersBadContrast =
-		contrastRatio < 4.5
+		$contrastRatio < 4.5
 			? `background: #393939; color: rgba(233,233,255,0.9);`
-			: `background: rgba(0,0,0,0); color: ${fgColor};`;
+			: `background: rgba(0,0,0,0); color: ${$fgColor};`;
 
-	function cssizer(color) {
-		if (typeof color === 'string') {
-			color = hexToRGB(color);
-		}
-		let triad = Object.keys(color);
-		if (triad.length !== 3) {
-			return '0, 0, 0';
-		}
-		return `${color[triad[0]]}, ${color[triad[1]]}, ${color[triad[2]]}`;
-	}
-	$: console.log('palette', palette);
-
-	$: console.log('background color', bgColor);
-	$: console.log('scjema', schema);
+	// $: console.log('palette', palette);
+	// $: console.log('background color', $bgColor);
 </script>
 
 <p class:hide={imageUrl !== 'tunnel.jpg'} style={fixUsersBadContrast} class="photo-credit">
@@ -120,10 +99,10 @@
 <div
 	class="wrapper"
 	id="wrapper"
-	style="--bg-color: {bgColor}; --fg-color: {fgColor}; background-color: rgb({cssizer(bgColor)})"
+	style="--bg-color: {$bgColor}; --fg-color: {$fgColor}; background-color: rgb({cssizer($bgColor)})"
 >
 	<img class="underlay" id="underlay" src={imageUrl} alt="" />
-	<div class="overlay" style="background-color: rgba({cssizer(overlayColor)}, {opacity});"></div>
+	<div class="overlay" style="background-color: rgba({cssizer($overlayColor)}, {$opacity});"></div>
 	<div class="infobox">
 		<div class="lilwrapper" id="file-upload">
 			<FileUploader
@@ -164,6 +143,10 @@
 					>What is this i don't even</button
 				>
 				<div class="more-info-content">
+					<h1 style="color: #ccc !important; text-align: left;">
+						It's a WGAC Contrast Checker for working with translucent overlays.
+					</h1>
+					<h4>bg + (overlay color * opacity) : fg</h4>
 					<p>
 						This tool calculates the contrast ratio of text on background when using a
 						semi-transparent overlay. Provide a background color, an overlay color, and a
@@ -190,77 +173,83 @@
 					</p>
 					<p>
 						Why? Because it's a deceptively difficult task. There are plenty of tools online that
-						will check contrast ratio, they don't often make it easy to use opacity-based blend and
-						then to tweak the colors to get a decent ratio. The idea of this tool is that it allows
-						you to tweak the knobs a bit better. Additionally, the image palette generation part
-						isn't super common.
+						will check contrast ratio, but they don't often make it easy to use opacity-based blend
+						and then to tweak the colors to get a decent ratio. The idea of this tool is that it
+						allows you to tweak the knobs a bit better. Additionally, the image palette generation
+						part isn't super common.
 					</p>
 					<p>
 						<em>
 							Please note that this tool does not upload anything to a server. There's no storage,
-							no memory, nothing like that. The only data collected by the tool is traffic, and I
-							don't sell your data.
+							no memory, nothing like that. The only data collected by the tool is traffic.
 						</em>
 					</p>
-					<p>
-						Once upon a time, I made a background with an overlay. The contrast was great! But then
-						my "stakeholder" felt the background was too dark. <em>Too</em> dark. Is that even possible?
-					</p>
-					<p>
-						She gave me a target color, and asked me to blend the background color with the overlay
-						to reach that target.
-					</p>
-					<p>
-						I don't know if you know anything about color theory, but the math involved in that
-						request is...from another planet. So I made a thing. This way, I never have to do that
-						math, and, hopefully, with this lil tool, you can avoid it, too.
-					</p>
+					<blockquote>
+						<p>
+							Once upon a time, I made a background with an overlay. The contrast was great! But
+							then my "stakeholder" felt the background was too dark. <em>Too</em> dark. Is that even
+							possible?
+						</p>
+						<p>
+							She gave me a target color, and asked me to blend the background color with the
+							overlay to reach that target.
+						</p>
+						<p>
+							I don't know if you know anything about color theory, but the math involved in that
+							request is...from another planet. So I made a thing. This way, I never have to do that
+							math, and, hopefully, with this lil tool, you can avoid it, too.
+						</p>
+					</blockquote>
 				</div>
 			</div>
 		</div>
 		<div class="lilwrapper" id="color-display">
 			<div class="intro">
 				<p>
-					text: {fgColor}
+					text: {$fgColor}
 				</p>
-				<p>on background: {bgColor}</p>
+				<p>on background: {$bgColor}</p>
 
 				<p>
-					with overlay: {overlayColor} at {(opacity * 100).toFixed(0)}%
+					with overlay: {$overlayColor} at {($opacity * 100).toFixed(0)}%
 				</p>
 				<p>looks kinda like:</p>
 			</div>
 			<div class="rgb" style="background-color: rgb({cssizer(resultRGB)}); text-align: center;">
-				<p style=" color: {fgColor}">
+				<p style=" color: {$fgColor}">
 					rgb: {cssizer(resultRGB)}
+					<CopyButton
+						text={`background-color: rgb(${cssizer(resultRGB)}); background: linear-gradient(${$overlayColor + Math.round($opacity * 255).toString(16)}, ${$overlayColor + Math.round($opacity * 255).toString(16)}), url('${imageFilename}'); color: ${$fgColor};`}
+						feedback="Copied!{(imageUrl !== 'tunnel.jpg' &&
+							" Please note that if you've uploaded an image, this will copy that image as a base64 data image, which can be a lot of text.") ||
+							''}"
+					/>
 				</p>
 			</div>
 			<div class="contrast">
-				<p class={contrastRatio < 3 ? 'pink' : contrastRatio > 4.5 ? 'lightgreen' : 'yellow'}>
-					contrast ratio: {contrastRatio}
+				<p class={$contrastRatio < 3 ? 'pink' : $contrastRatio > 4.5 ? 'lightgreen' : 'yellow'}>
+					contrast ratio: {$contrastRatio}
 				</p>
 			</div>
 		</div>
 	</div>
-
-	<h1 style="color: rgb({cssizer(fgColor)});">
-		Overlay Opacity: {opacity.toFixed(2)}%
-	</h1>
-	<div class="slider-wrapper">
-		<div class="lilwrapper" id="slider">
-			<Slider
-				hideTextInput
-				bind:value={opacity}
-				min={0}
-				max={1}
-				step={0.01}
-				on:change={updateComputedColor}
-			/>
-		</div>
-	</div>
+	<Slider />
 </div>
 
 <style>
+	blockquote {
+		padding: 11px 11px 11px 33px;
+		border-left: 2px solid #cccc;
+		background: rgba(0, 0, 0, 0.11);
+
+		display: flex;
+		flex-direction: column;
+		gap: 11px;
+	}
+	:global(.bx--copy-btn__feedback) {
+		overflow-wrap: break-word !important;
+		max-width: 200px;
+	}
 	.dropdown-wrapper {
 		width: 100%;
 		display: flex;
@@ -380,7 +369,7 @@
 		}
 	}
 	.wrapper {
-		/* overflow: hidden; */
+		overflow: hidden;
 		position: relative;
 		background-size: cover;
 		display: flex;
@@ -413,8 +402,8 @@
 	@media screen and (min-width: 876px) {
 		.wrapper {
 			/* overflow: auto; */
-			min-height: 100vh;
-			min-width: 100vw;
+			min-height: 100dvh;
+			width: 100dvw;
 		}
 		.infobox {
 			justify-content: space-between;
@@ -426,6 +415,11 @@
 		#file-upload {
 			align-self: start;
 		}
+	}
+	.wrapper,
+	.overlay,
+	.underlay {
+		overflow: hidden;
 	}
 	.overlay,
 	.underlay {
@@ -484,15 +478,5 @@
 			margin-top: 11px;
 			text-align: right;
 		}
-	}
-	.slider-wrapper {
-		z-index: 3;
-		position: absolute;
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		justify-content: end;
-		align-items: center;
-		/* background-color: #393939; */
 	}
 </style>
