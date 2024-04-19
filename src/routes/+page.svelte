@@ -28,6 +28,7 @@
 	$: fgColor = useImageColors && palette[schema[2].id] ? palette[schema[2].id] : fgColorPicker;
 
 	// TODO: refactor schema to allow colorpicker input after image upload
+	// TODO: pull apart the spaghetti and make into components
 
 	onMount(async () => {
 		colorThief = new ColorThief();
