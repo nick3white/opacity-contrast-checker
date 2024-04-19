@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 	import ColorThief from 'colorthief';
 	import 'carbon-components-svelte/css/g90.css';
-	import { CopyButton, Dropdown, FileUploader, Slider } from 'carbon-components-svelte';
+	import { Dropdown, FileUploader, Slider } from 'carbon-components-svelte';
 	import { calculateContrastRatio, objectify } from '$lib';
 	import { hexToRGB, rgbToHex } from '$lib/colorUtils';
 	let colorThief,
@@ -233,7 +233,6 @@
 			<div class="rgb" style="background-color: rgb({cssizer(resultRGB)}); text-align: center;">
 				<p style=" color: {fgColor}">
 					rgb: {cssizer(resultRGB)}
-					<CopyButton text={cssizer(resultRGB)} feedback="Copied!">ok</CopyButton>
 				</p>
 			</div>
 			<div class="contrast">
