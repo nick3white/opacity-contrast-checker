@@ -180,8 +180,8 @@
 					</p>
 					<p>
 						<em>
-							Please note that this tool does not upload anything to a server. There's no storage,
-							no memory, nothing like that. The only data collected by the tool is traffic.
+							Please note that this tool does not upload anything to a server. There's no storage, and
+							no memory, so make a note of any results you want to keep!
 						</em>
 					</p>
 					<blockquote>
@@ -197,7 +197,7 @@
 						<p>
 							I don't know if you know anything about color theory, but the math involved in that
 							request is...from another planet. So I made a thing. This way, I never have to do that
-							math, and, hopefully, with this lil tool, you can avoid it, too.
+							math, and, hopefully, with this little tool, you can avoid it, too.
 						</p>
 					</blockquote>
 				</div>
