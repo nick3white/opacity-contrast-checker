@@ -1,0 +1,88 @@
+<dl class="more-info">
+  <dt>What?</dt>
+  <dd style="color: #ccc !important; text-align: left" class="tldr">
+    It's a WGAC Contrast Checker for working with translucent overlays.
+  </dd>
+  <dd>
+    <code>bg + (overlay color * opacity) : fg</code>
+  </dd>
+  <dd>
+    This tool calculates the contrast ratio of text on background when using a
+    semi-transparent overlay. Provide a background color, an overlay color, and
+    a foreground/text color, and the tool will calculate the contrast ratio,
+    seen in the bottom right.
+  </dd>
+  <dd>
+    Given that background images will usually have dynamic color ranges, this
+    tool can only approximate an average ratio; use your actual real life
+    eyeballs in addition to the ratio calculation.
+  </dd>
+  <dd>
+    The
+    <a
+      href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html"
+      target="_blank"
+      >WCAG guidelines</a
+    >
+    use the following thresholds:
+    <ul>
+      <li class="lightgreen">greater than 4.5:1 is "AA" status;</li>
+      <li class="yellow">3.0-4.5 is "A";</li>
+      <li class="pink">less than 3 means you have <em>failed.</em></li>
+    </ul>
+  </dd>
+  <dt>How?</dt>
+  <dd>
+    <ol>
+      <li>
+        Select a background or upload a background image. If you choose an
+        image, this site will get the dominant color of the image, using
+        <a
+          href="https://lokeshdhakar.com/projects/color-thief/"
+          target="_blank"
+          class=""
+          >Color Thief</a
+        >.
+        <note
+          >(Note that your image will not actually be uploaded anywhere,
+          everything here is client-side.)</note
+        >
+      </li>
+      <li>
+        Select a font color and an overlay color. Use the slider to adjust the
+        opacity of the overlay.
+      </li>
+    </ol>
+  </dd>
+  <dd>
+    This site will then apply the overlay to the background color, or the
+    image's dominant color, and use the font color to give you a WCAG grade.
+    After tweaking and adjusting, you can grab the resulting CSS from the "click
+    to copy" button.
+  </dd>
+  <dt>Why?</dt>
+  <dd>
+    Because it's a deceptively difficult task. There are plenty of tools online
+    that will check contrast ratio, but they don't often make it easy to use
+    opacity-based blend and then to tweak the colors to get a decent ratio. The
+    idea of this tool is that it allows you to tweak the knobs a bit better.
+    Additionally, the image palette generation part isn't super common.
+  </dd>
+  <dd>
+    <note>
+      Once upon a time, I made a background with an overlay. The contrast was
+      great! But then my "stakeholder" felt the background was too dark.
+      <em>Too</em> dark, she said. Is that even possible?
+    </note>
+    <note>
+      She gave me a target color, and asked me to blend the background color
+      with the overlay to reach that target.
+    </note>
+    <note>
+      I don't know if you know anything about color theory, but the math
+      involved in that request is...from another planet. So I made this. Now I
+      never have to do that math, and, hopefully, with this little tool, you can
+      avoid it, too.
+    </note>
+  </dd>
+</dl>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="./favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+		<link href="./_app/immutable/assets/2.pFhyeoTZ.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.CjhmMq2M.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.BTSOUtm3.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.DpmkryvL.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.CFrhX26m.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.DayokFdL.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.CNYffL7q.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.CP8847U2.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.DuoI3Vlk.js">
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-P8VPCEJQCG"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'G-P8VPCEJQCG');
+	</script>
+
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">  <p style="background: rgba(0,0,0,0); color: #182a2f;" class="photo-credit svelte-uxfm2w">photo by <a href="https://www.flickr.com/photos/megane_wakui" style="background: rgba(0,0,0,0); color: #182a2f;" target="_blank" class="svelte-uxfm2w">Masashi Wakui</a></p> <div class="wrapper svelte-uxfm2w" id="wrapper" style="--bg-color: #3c6d88; --fg-color: #182a2f; background-color: rgb(60, 109, 136)"><img class="underlay svelte-uxfm2w" id="underlay" src="tunnel.jpg" alt=""> <div class="overlay svelte-uxfm2w" style="background-color: rgba(185, 207, 221, 0.5);"></div> <div class="infobox svelte-uxfm2w"><div class="lilwrapper svelte-uxfm2w" id="file-upload">  <div hideTitle class="bx--form-item">    <label aria-disabled="false" for="ccs-0.p0ikeaspcu" tabindex="0" class="bx--btn  bx--btn--primary       bx--btn--sm"><span role="button"> Add image </span></label> <input type="file" tabindex="-1" accept="image/*" id="ccs-0.p0ikeaspcu" name="" class="bx--visually-hidden"> <div class="bx--file-container"></div></div> <div class="input-wrapper svelte-uxfm2w"><label for="bgPicker" data-svelte-h="svelte-dun06q">Background Color:</label> <input type="color" class="color-picker svelte-uxfm2w" id="bgPicker" value="#3c6d88"></div> <div class="input-wrapper svelte-uxfm2w"><label for="olPicker" data-svelte-h="svelte-11ddrso">Overlay Color:</label> <input type="color" class="color-picker svelte-uxfm2w" id="olPicker" value="#b9cfdd"></div> <div class="input-wrapper svelte-uxfm2w"><label for="fgPicker" data-svelte-h="svelte-1gjhrcb">Foreground Color:</label> <input type="color" class="color-picker svelte-uxfm2w" id="fgPicker" value="#182a2f"></div> <div class="more-info"><button class="teaser svelte-uxfm2w" data-svelte-h="svelte-1nvafnw">What is this i don&#39;t even</button> <div class="more-info-content svelte-uxfm2w" data-svelte-h="svelte-13bs3l6"><h1 style="color: #ccc !important; text-align: left;" class="svelte-uxfm2w">It&#39;s a WGAC Contrast Checker for working with translucent overlays.</h1> <h4>bg + (overlay color * opacity) : fg</h4> <p>This tool calculates the contrast ratio of text on background when using a
+						semi-transparent overlay. Provide a background color, an overlay color, and a
+						foreground/text color, and the tool will calculate the contrast ratio, seen in the
+						bottom right.</p> <p>The <a href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html" target="_blank" class="svelte-uxfm2w">WCAG guidelines</a>
+						use the following thresholds:
+						<span class="lightgreen svelte-uxfm2w">greater than 4.5:1 is &quot;AA&quot; status;</span> <span class="yellow svelte-uxfm2w">3.0-4.5 is &quot;A&quot;;</span> <span class="pink svelte-uxfm2w">less than 3 is <em>fail.</em></span></p> <p>If you choose an image of your own, the tool will generate a 5-color palette from the
+						dominant colors of the image, using <a href="https://lokeshdhakar.com/projects/color-thief/" target="_blank" class="svelte-uxfm2w">Color Thief</a>. (This tool doesn&#39;t provide css for the full palette, the Color Thief website provides
+						that functionality, and it&#39;s a bit out of scope for this already-bloated tool.)</p> <p>Why? Because it&#39;s a deceptively difficult task. There are plenty of tools online that
+						will check contrast ratio, but they don&#39;t often make it easy to use opacity-based blend
+						and then to tweak the colors to get a decent ratio. The idea of this tool is that it
+						allows you to tweak the knobs a bit better. Additionally, the image palette generation
+						part isn&#39;t super common.</p> <p><em>Please note that this tool does not upload anything to a server. There&#39;s no storage, and
+							no memory, so make a note of any results you want to keep!</em></p> <blockquote class="svelte-uxfm2w"><p>Once upon a time, I made a background with an overlay. The contrast was great! But
+							then my &quot;stakeholder&quot; felt the background was too dark. <em>Too</em> dark. Is that even
+							possible?</p> <p>She gave me a target color, and asked me to blend the background color with the
+							overlay to reach that target.</p> <p>I don&#39;t know if you know anything about color theory, but the math involved in that
+							request is...from another planet. So I made a thing. This way, I never have to do that
+							math, and, hopefully, with this little tool, you can avoid it, too.</p></blockquote></div></div></div> <div class="lilwrapper svelte-uxfm2w" id="color-display"><div class="intro"><p class="svelte-uxfm2w">text: #182a2f</p> <p class="svelte-uxfm2w">on background: #3c6d88</p> <p class="svelte-uxfm2w">with overlay: #b9cfdd at 50%</p> <p class="svelte-uxfm2w" data-svelte-h="svelte-3px9hm">looks kinda like:</p></div> <div class="rgb svelte-uxfm2w" style="background-color: rgb(123, 158, 179); text-align: center;"><p style="color: #182a2f" class="svelte-uxfm2w">rgb: 123, 158, 179 <button type="button" aria-live="polite" aria-label="Copy to clipboard" title="Copy to clipboard" class="bx--copy-btn bx--copy   "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden class="bx--snippet__icon"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg> <span aria-hidden="true" class="bx--assistive-text bx--copy-btn__feedback">Copied!</span></button></p></div> <div class="contrast"><p class="lightgreen svelte-uxfm2w">contrast ratio: 5.23</p></div></div></div> <div class="slider-component svelte-9ez1ba"><h2 style="color: rgb(24, 42, 47);" class="svelte-9ez1ba">Overlay Opacity: 0.50%</h2> <div class="slider-wrapper svelte-9ez1ba" id="slider">   <div class="bx--form-item"><label for="ccs-0.vh134rc6ksd" id="label-ccs-0.vh134rc6ksd" class="bx--label">  </label> <div class="bx--slider-container"><span class="bx--slider__range-label">0</span> <div role="presentation" tabindex="-1" class="bx--slider"><div role="slider" tabindex="0" aria-valuemax="1" aria-valuemin="0" aria-valuenow="0.5" aria-labelledby="label-ccs-0.vh134rc6ksd" id="ccs-0.vh134rc6ksd" class="bx--slider__thumb" style="left: 50%;"></div> <div class="bx--slider__track"></div> <div class="bx--slider__filled-track" style="transform: translate(0, -50%) scaleX(0.5);"></div></div> <span class="bx--slider__range-label">1</span> <input type="hidden" id="input-ccs-0.vh134rc6ksd" name="" value="0.5" aria-labelledby="label-ccs-0.vh134rc6ksd" aria-label="Slider number input"   min="0" max="1" step="0.01" class="bx--text-input bx--slider-text-input"></div></div></div>  </div> </div> 
+			
+			<script>
+				{
+					__sveltekit_tvyimr = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.CjhmMq2M.js"),
+						import("./_app/immutable/entry/app.DayokFdL.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+</body>
+
+</html>
