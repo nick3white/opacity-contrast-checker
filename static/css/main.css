@@ -264,3 +264,12 @@ input[type="color"] {
 .tldr {
   font-size: 1.33rem;
 }
+.text-test-container {
+  position: fixed;
+  inset: 40vmin;
+  font-size: 33px;
+  color: var(--fg-color);
+}
+
+#text-test {
+}

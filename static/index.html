@@ -6,6 +6,7 @@
     <title>Accessibility Contrast Checker</title>
 
     <link rel="stylesheet" href="/opacity-contrast-checker/css/main.css" />
+    <!-- <link rel="stylesheet" href="/static/css/main.css" /> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
   </head>
   <body id="main">
@@ -83,6 +84,13 @@
         <button onclick="showModal()" class="btn">
           What is this I don't even
         </button>
+      </div>
+      <div class="text-test-container">
+        <p contenteditable="true" id="text-test">
+          Your Text Here <br /><small
+            >(you can type in here if you want!)</small
+          >
+        </p>
       </div>
 
       <section class="modal" id="modal">
@@ -366,6 +374,9 @@ color: #182a2f;
         const resultPreview = document.getElementById("result-preview");
         resultPreview.style.backgroundColor = `rgb(${finalBgRgb.r}, ${finalBgRgb.g}, ${finalBgRgb.b})`;
         resultPreview.style.color = fontColor;
+
+        const testTextEl = document.getElementById("text-test");
+        testTextEl.style.color = fontColor;
 
         // Calculate contrast ratio
         const contrastRatio = getContrastRatio(fontRgb, finalBgRgb);
